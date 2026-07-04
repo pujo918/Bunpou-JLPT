@@ -3,6 +3,7 @@ window.SETSUZOKUSHI_DATA = [
   // === N5 ===
   {
     "setsuzokushi": "だから",
+    "romaji": "dakara",
     "level": "N5",
     "category": "Sebab-Akibat",
     "arti": "Karena itu / jadi (kasual)",
@@ -11,6 +12,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ですから",
+    "romaji": "desukara",
     "level": "N5",
     "category": "Sebab-Akibat",
     "arti": "Karena itu / jadi (sopan)",
@@ -19,6 +21,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そして",
+    "romaji": "soshite",
     "level": "N5",
     "category": "Penambahan",
     "arti": "Dan / lalu / kemudian",
@@ -27,14 +30,17 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それから",
+    "romaji": "sorekara",
     "level": "N5",
     "category": "Penambahan",
     "arti": "Setelah itu / kemudian / lalu",
     "nuansa": "Menekankan urutan waktu (tindakan berikutnya setelah tindakan pertama selesai).",
-    "perbedaan": "Fokus pada urutan kronologis kejadian, berbeda dengan 'そして' yang lebih ke penambahan informasi."
+    "perbedaan": "Fokus pada urutan kronologis kejadian, berbeda dengan '그리고' yang lebih ke penambahan informasi."
   },
   {
+    "setsuzokushi": "selanjutnya",
     "setsuzokushi": "でも",
+    "romaji": "demo",
     "level": "N5",
     "category": "Pertentangan",
     "arti": "Tapi / namun (kasual)",
@@ -43,6 +49,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "しかし",
+    "romaji": "shikashi",
     "level": "N5",
     "category": "Pertentangan",
     "arti": "Tetapi / namun (formal)",
@@ -51,6 +58,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "では",
+    "romaji": "dewa soredewa",
     "level": "N5",
     "category": "Pengalihan Topik",
     "arti": "Kalau begitu / mari",
@@ -59,6 +67,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "じゃ",
+    "romaji": "ja",
     "level": "N5",
     "category": "Pengalihan Topik",
     "arti": "Kalau begitu (kasual)",
@@ -67,6 +76,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "じゃあ",
+    "romaji": "jaa",
     "level": "N5",
     "category": "Pengalihan Topik",
     "arti": "Kalau begitu (percakapan)",
@@ -75,6 +85,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それでは",
+    "romaji": "soredeha soredewa",
     "level": "N5",
     "category": "Pengalihan Topik",
     "arti": "Kalau begitu (sopan)",
@@ -83,6 +94,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それじゃ",
+    "romaji": "soreja",
     "level": "N5",
     "category": "Pengalihan Topik",
     "arti": "Kalau begitu (kasual)",
@@ -91,6 +103,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それじゃあ",
+    "romaji": "sorejaa",
     "level": "N5",
     "category": "Pengalihan Topik",
     "arti": "Kalau begitu (percakapan)",
@@ -99,6 +112,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それで",
+    "romaji": "sorede",
     "level": "N5",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu / lalu / setelah itu",
@@ -107,6 +121,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "だって",
+    "romaji": "datte",
     "level": "N5",
     "category": "Sebab-Akibat",
     "arti": "Karena / tapi kan (kasual percakapan)",
@@ -117,6 +132,7 @@ window.SETSUZOKUSHI_DATA = [
   // === N4 ===
   {
     "setsuzokushi": "それに",
+    "romaji": "soreni",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Selain itu / lagipula",
@@ -125,6 +141,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そこで",
+    "romaji": "sokode",
     "level": "N4",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu / lalu / maka dari itu",
@@ -133,6 +150,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "すると",
+    "romaji": "suruto",
     "level": "N4",
     "category": "Sebab-Akibat",
     "arti": "Seketika itu juga / begitu... lalu",
@@ -141,6 +159,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "けれども",
+    "romaji": "keredomo",
     "level": "N4",
     "category": "Pertentangan",
     "arti": "Namun / akan tetapi",
@@ -149,6 +168,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "けれど",
+    "romaji": "keredo",
     "level": "N4",
     "category": "Pertentangan",
     "arti": "Namun / akan tetapi (lebih pendek)",
@@ -157,6 +177,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "だけど",
+    "romaji": "dakedo",
     "level": "N4",
     "category": "Pertentangan",
     "arti": "Tapi / namun (kasual)",
@@ -164,8 +185,8 @@ window.SETSUZOKUSHI_DATA = [
     "perbedaan": "Identik dengan 'でも' tapi 'だけど' memberi sedikit penekanan pada batas atau kondisi sebelumnya."
   },
   {
-    "setsuzokushi": "g",
     "setsuzokushi": "ですが",
+    "romaji": "desuga",
     "level": "N4",
     "category": "Pertentangan",
     "arti": "Tetapi / namun (sopan)",
@@ -174,6 +195,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それでも",
+    "romaji": "soredemo",
     "level": "N4",
     "category": "Pertentangan",
     "arti": "Meskipun demikian / namun tetap saja",
@@ -182,6 +204,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それなのに",
+    "romaji": "sorenanoni",
     "level": "N4",
     "category": "Pertentangan",
     "arti": "Padahal / meskipun begitu (kecewa/heran)",
@@ -190,6 +213,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ところで",
+    "romaji": "tokorode",
     "level": "N4",
     "category": "Pengalihan Topik",
     "arti": "Ngomong-ngomong (mengubah topik)",
@@ -198,6 +222,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それとも",
+    "romaji": "soretomo",
     "level": "N4",
     "category": "Alternatif",
     "arti": "Atau (pilihan dalam kalimat tanya)",
@@ -206,6 +231,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "また",
+    "romaji": "mata",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Dan juga / selain itu / kembali",
@@ -214,6 +240,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "または",
+    "romaji": "mataha matawa",
     "level": "N4",
     "category": "Alternatif",
     "arti": "Atau (pilihan dalam kalimat pernyataan)",
@@ -222,6 +249,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "つまり",
+    "romaji": "tsumari",
     "level": "N4",
     "category": "Singkatan/Penjelasan",
     "arti": "Artinya / dengan kata lain",
@@ -230,6 +258,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "たとえば",
+    "romaji": "tatoeba",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Sebagai contoh / misalnya",
@@ -238,6 +267,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ついでに",
+    "romaji": "tsuideni",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Sekalian / mumpung / sambil lalu",
@@ -246,14 +276,16 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "結局",
+    "romaji": "kekkyoku",
     "level": "N4",
     "category": "Sebab-Akibat",
-    "arti": "Pada akhirnya / ujung-ujungnya",
+    "arti": "Pada akhir-akhirnya / ujung-ujungnya",
     "nuansa": "Menunjukkan hasil final setelah melalui proses panjang, rintangan, atau perdebatan.",
     "perbedaan": "Sering mengandung nuansa pasrah atau simpulan mutlak."
   },
   {
     "setsuzokushi": "実は",
+    "romaji": "jitsuha jitsuwa",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Sebenarnya / sejujurnya",
@@ -262,6 +294,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "まず",
+    "romaji": "mazu",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Pertama-tama",
@@ -270,6 +303,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "次に",
+    "romaji": "tsugini",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Selanjutnya",
@@ -278,6 +312,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "最後に",
+    "romaji": "saigoni",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Terakhir / pada akhirnya",
@@ -286,6 +321,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのあとで",
+    "romaji": "sonoatode",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Setelah itu",
@@ -294,6 +330,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのとき",
+    "romaji": "sonotoki",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Pada saat itu",
@@ -302,16 +339,18 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのあと",
+    "romaji": "sonoato",
     "level": "N4",
     "category": "Penambahan",
     "arti": "Setelah itu / sesudahnya",
-    "nuansa": "Bentuk percakapan yang lebih santai dari 'そのあとで'.",
+    "nuansa": "Bentuk percakapan yang lebih santai dari 'そのあとred'.",
     "perbedaan": "Sering dipakai dalam log aktivitas sehari-hari."
   },
 
   // === N3 ===
   {
     "setsuzokushi": "あるいは",
+    "romaji": "aruiha aruiwa",
     "level": "N3",
     "category": "Alternatif",
     "arti": "Atau / atau mungkin",
@@ -320,6 +359,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "したがって",
+    "romaji": "shitagatte",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu / maka dari itu (formal)",
@@ -328,6 +368,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ただし",
+    "romaji": "tadashi",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Namun / tetapi (syarat/pengecualian)",
@@ -336,6 +377,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ところが",
+    "romaji": "tokoroga",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Namun / padahal (hasil di luar dugaan)",
@@ -344,14 +386,16 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "しかも",
+    "romaji": "shikamo",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Terlebih lagi / lagipula / sudah begitu",
-    "nuansa": "Menambahkan informasi penting yang tingkatannya lebih tinggi/mengejutkan untuk memperkuat impresi.",
+    "nuansa": "Menambahkan info penting yang tingkatannya lebih tinggi/mengejutkan untuk memperkuat impresi.",
     "perbedaan": "Lebih menekankan efek akumulasi dibanding 'それに' (seperti: sudah murah, enak pula)."
   },
   {
     "setsuzokushi": "そのうえ",
+    "romaji": "sonoue",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Selain itu / ditambah lagi",
@@ -360,6 +404,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのため",
+    "romaji": "sonotame",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu / akibat hal tersebut",
@@ -368,6 +413,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "なぜなら",
+    "romaji": "nazenara",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Karena / alasannya adalah karena",
@@ -376,6 +422,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "要するに",
+    "romaji": "yousuruni",
     "level": "N3",
     "category": "Singkatan/Penjelasan",
     "arti": "Intinya / singkat kata",
@@ -384,6 +431,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "すなわち",
+    "romaji": "sunawachi",
     "level": "N3",
     "category": "Singkatan/Penjelasan",
     "arti": "Yaitu / dengan kata lain (sangat formal)",
@@ -392,6 +440,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "なお",
+    "romaji": "nao",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Selain itu / sebagai informasi tambahan",
@@ -400,6 +449,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "もっとも",
+    "romaji": "mottomo",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Namun / walaupun demikian (koreksi)",
@@ -408,6 +458,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ちなみに",
+    "romaji": "chinamini",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Ngomong-ngomong / info tambahan (by the way)",
@@ -416,6 +467,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それにしては",
+    "romaji": "sorenishiteha sorenishitewa",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Untuk ukuran itu..., ternyata...",
@@ -424,6 +476,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それにしても",
+    "romaji": "sorenishitemo",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Bagaimanapun juga / tetap saja",
@@ -432,6 +485,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それどころか",
+    "romaji": "soredokoroka",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Jangankan begitu / kenyataannya sebaliknya",
@@ -440,6 +494,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それに対して",
+    "romaji": "sorenitaishite",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Sebaliknya / terhadap hal tersebut",
@@ -448,6 +503,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "もしくは",
+    "romaji": "moshikaha moshikawa",
     "level": "N3",
     "category": "Alternatif",
     "arti": "Atau / atau jika tidak (formal)",
@@ -456,6 +512,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "言い換えれば",
+    "romaji": "iikaereba",
     "level": "N3",
     "category": "Singkatan/Penjelasan",
     "arti": "Dengan kata lain",
@@ -464,6 +521,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "その結果",
+    "romaji": "sonokekka",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Sebagai akibatnya / hasilnya",
@@ -472,6 +530,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そうすると",
+    "romaji": "sousuruto",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Jika demikian / kalau begitu",
@@ -480,6 +539,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そうすれば",
+    "romaji": "sousureba",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Jika melakukan hal itu / dengan begitu",
@@ -488,6 +548,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そうしたら",
+    "romaji": "soushitara",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Lalu jika begitu / setelah itu",
@@ -496,6 +557,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それなら",
+    "romaji": "sorenaraba sorenara",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Kalau begitu / jika demikian",
@@ -504,6 +566,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そればかりか",
+    "romaji": "sorebarakarika",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Bukan hanya itu saja / melainkan juga",
@@ -512,6 +575,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そればかりでなく",
+    "romaji": "sorebarakaridenaku",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Tidak hanya itu, tetapi juga",
@@ -520,6 +584,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "さらに",
+    "romaji": "sarani",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Lebih lanjut / terlebih lagi",
@@ -528,6 +593,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "その反面",
+    "romaji": "sonohanmen",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Di sisi lain / sebaliknya",
@@ -536,6 +602,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "結論として",
+    "romaji": "ketsurontoshite",
     "level": "N3",
     "category": "Singkatan/Penjelasan",
     "arti": "Sebagai kesimpulan",
@@ -544,14 +611,16 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "というのも",
+    "romaji": "toiuu nomo toyunomo toiu-nomo",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Karena / pasalnya adalah",
     "nuansa": "Menjelaskan alasan subjektif di balik keputusan atau fakta yang diutarakan di kalimat pertama.",
-    "perbedaan": "Terasa lebih hangat dan interaktif dibanding 'なぜなら' dalam percakapan."
+    "perbedaan": "Terasa lebih hangat dan interaktif dibanding 'nanisora' dalam percakapan."
   },
   {
     "setsuzokushi": "だとしたら",
+    "romaji": "datoshitara",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Jika asumsinya begitu",
@@ -559,15 +628,18 @@ window.SETSUZOKUSHI_DATA = [
     "perbedaan": "Biasa digunakan untuk menguji konsekuensi dari suatu premis."
   },
   {
+    "setsuzokushi": "base-wake-de",
     "setsuzokushi": "そういうわけで",
+    "romaji": "souiuwakede soyuwakede",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena hal yang demikian",
-    "nuansa": "Menyimpulkan seluruh kronologi sebab yang sudah dipaparkan sebelumnya.",
+    "nuansa": "Menyimplkan seluruh kronologi sebab yang sudah dipaparkan sebelumnya.",
     "perbedaan": "Merangkum penjelasan panjang ke dalam satu keputusan akhir."
   },
   {
     "setsuzokushi": "それゆえに",
+    "romaji": "soreyueni",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu (sastra/formal)",
@@ -576,6 +648,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "同時に",
+    "romaji": "doujini",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Pada saat yang sama / sekaligus",
@@ -584,6 +657,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そうかと言って",
+    "romaji": "soukatoitte",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Meskipun dikatakan begitu, namun...",
@@ -592,6 +666,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "かと言って",
+    "romaji": "katoitte",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Namun meskipun demikian...",
@@ -600,6 +675,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "とは言え / とはいえ",
+    "romaji": "tohaie towaie",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Walaupun dikatakan demikian",
@@ -608,15 +684,16 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "とはいうものの",
+    "romaji": "tohaiumonono towaiumonono",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Meskipun sebenarnya demikian",
     "nuansa": "Gaya bahasa formal untuk meremehkan fakta pertama demi menegaskan poin kedua.",
-    "perbedaan": "Lebih formal dan bernuansa pesimis dibanding 'とはいえ'."
+    "perbedaan": "Lebih formal dan bernuansa pesimis dibanding '恋文'."
   },
   {
-    "setsuzokushi": "animokawazu",
     "setsuzokushi": "にもかかわらず",
+    "romaji": "nimokakawarazu",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Meskipun / padahal / terlepas dari",
@@ -625,6 +702,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ただ",
+    "romaji": "tada",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Hanya saja / namun",
@@ -633,6 +711,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "さて",
+    "romaji": "sate",
     "level": "N3",
     "category": "Pengalihan Topik",
     "arti": "Nah / sekarang (pindah topik)",
@@ -641,6 +720,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それはそうと",
+    "romaji": "sorehasouto sorewasouto",
     "level": "N3",
     "category": "Pengalihan Topik",
     "arti": "Sampingkan hal itu / ngomong-ngomong",
@@ -648,7 +728,9 @@ window.SETSUZOKUSHI_DATA = [
     "perbedaan": "Lebih tajam pengalihan topiknya dibandingkan 'ところで'."
   },
   {
+    "setsuzokushi": "なぜかと言うu",
     "setsuzokushi": "なぜかと言うと",
+    "romaji": "nazekatoiuto",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Alasannya adalah karena",
@@ -657,6 +739,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それゆえ",
+    "romaji": "soreyue",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu",
@@ -665,6 +748,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのくせ",
+    "romaji": "sonokuse",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Padahal / padahal dia... (menyindir)",
@@ -673,14 +757,16 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "なおさら",
+    "romaji": "naosara",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Terlebih lagi / apalagi",
-    "nuansa": "Menegaskan bahwa situasi kedua akan menjadi jauh lebih ekstrem lagi karena kondisi pertama mendukungnya.",
+    "nuansa": "Negasikan bahwa situasi kedua akan menjadi jauh lebih ekstrem lagi karena kondisi pertama mendukungnya.",
     "perbedaan": "Menunjukkan kelipatan efek (contoh: 'Kalau sepi saja takut, apalagi tengah malam')."
   },
   {
     "setsuzokushi": "まして",
+    "romaji": "mashite",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Apalagi / jangankan... (diikuti klausa negatif)",
@@ -689,6 +775,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのかわり",
+    "romaji": "sonokawari",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Sebagai gantinya",
@@ -697,6 +784,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それというのも",
+    "romaji": "soretoiuu nomo soretoyunomo",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Hal itu dikarenakan karena...",
@@ -705,6 +793,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "ゆえに",
+    "romaji": "yueni",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Oleh karena itu / oleh sebab itu",
@@ -713,14 +802,16 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "だからといって",
+    "romaji": "dakaratoitte",
     "level": "N3",
     "category": "Sebab-Akibat",
-    "arti": "Meskipun demikian bukan berarti...",
+    "arti": "Meskipun dibilang begitu... bukan berarti...",
     "nuansa": "Membantah pemikiran umum bahwa sebab di kalimat pertama harus selalu menghasilkan akibat di kalimat kedua.",
     "perbedaan": "Membatasi kesimpulan otomatis yang salah kaprah."
   },
   {
     "setsuzokushi": "それどころではない",
+    "romaji": "soredokorodehanai soredokorodewanai",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Jangankan begitu / situasi aslinya tidak memungkinkan",
@@ -729,6 +820,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "そのかわりに",
+    "romaji": "sonokawarini",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Sebagai gantinya (formal)",
@@ -737,6 +829,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それでもなお",
+    "romaji": "soredemonao",
     "level": "N3",
     "category": "Pertentangan",
     "arti": "Meskipun begitu tetap saja",
@@ -745,6 +838,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "それならば",
+    "romaji": "sorenaraba",
     "level": "N3",
     "category": "Sebab-Akibat",
     "arti": "Jika memang begitu halnya",
@@ -753,6 +847,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "他方で",
+    "romaji": "tahoude",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Di lain pihak / di sisi lain",
@@ -761,6 +856,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "一方",
+    "romaji": "ippou",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Di sisi lain / sedangkan",
@@ -769,6 +865,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "一方で",
+    "romaji": "ippoude",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Di satu sisi... (perbandingan)",
@@ -777,6 +874,7 @@ window.SETSUZOKUSHI_DATA = [
   },
   {
     "setsuzokushi": "その一方",
+    "romaji": "sonoippou",
     "level": "N3",
     "category": "Penambahan",
     "arti": "Namun di samping itu / sebaliknya",

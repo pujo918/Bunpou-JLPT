@@ -184,8 +184,11 @@
       filteredData = window.SETSUZOKUSHI_DATA.filter(function (s) {
         // Search Filter
         if (q) {
-          var hay = [s.setsuzokushi, s.arti, s.nuansa, s.perbedaan].join(" ").toLowerCase();
-          if (hay.indexOf(q) < 0) return false;
+          var hay = [s.setsuzokushi, s.romaji || "", s.arti, s.nuansa, s.perbedaan].join(" ").toLowerCase();
+          var words = q.split(/\s+/);
+          return words.every(function (word) {
+            return hay.indexOf(word) >= 0;
+          });
         }
         return true;
       });

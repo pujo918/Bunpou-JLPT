@@ -19,7 +19,10 @@
       }
       if (!q) return true;
       var hay = [g.grammar, g.reading, g.romaji, g.meaning].join(" ").toLowerCase();
-      return hay.indexOf(q) >= 0;
+      var words = q.split(/\s+/);
+      return words.every(function (word) {
+        return hay.indexOf(word) >= 0;
+      });
     });
   }
 
