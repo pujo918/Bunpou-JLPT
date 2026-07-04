@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Setsuzokushi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+<style>
+  /* === Custom Styles for Setsuzokushi Page === */
+  .s-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  
+  .s-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+  }
+  
+  .s-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
+  }
+  
+  .s-word {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .s-meaning-simple {
+    font-size: 13.5px;
+    color: var(--text-soft);
+    line-height: 1.4;
+  }
+  
+  .s-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+  }
+  
+  .s-info-row {
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  
+  .s-info-row strong {
+    color: var(--text-soft);
+    width: 110px;
+    flex-shrink: 0;
+  }
+  
+  .s-info-val {
+    color: var(--text);
+  }
+
+  /* === Study Mode Styles === */
+  .study-container {
+    max-width: 600px;
+    margin: 32px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .study-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 280px;
+  }
+
+  .study-card .s-word {
+    font-size: 32px;
+    font-weight: 800;
+  }
+
+  .study-card .s-body {
+    font-size: 15px;
+    gap: 16px;
+  }
+
+  .study-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .study-progress {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+
+  /* Dark Mode Adjustments */
+  [data-theme="dark"] .s-card,
+  [data-theme="dark"] .study-card {
+    background: #1e293b;
+    border-color: #334155;
+  }
+  [data-theme="dark"] .s-card:hover {
+    border-color: #475569;
+  }
+  [data-theme="dark"] .study-card .s-header {
+    border-bottom: none;
+  }
+</style>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content">
+    <div class="page-head">
+      <div class="eyebrow">Daftar Kata Hubung</div>
+      <h1>Setsuzokushi</h1>
+      <p>Kumpulan kata hubung (setsuzokushi) penting. Hubungkan kalimat Anda dengan arti, nuansa penggunaan, dan perbedaannya.</p>
+    </div>
+    
+    <!-- Mode Selector Tabs (Similar to Flashcard page selector style) -->
+    <div style="display: flex; justify-content: center; margin-bottom: 24px;">
+      <div class="fc-deck-selector" id="modeSelector" style="margin: 0;">
+        <button class="fc-deck-tab active" data-mode="list">Daftar Kata</button>
+        <button class="fc-deck-tab" data-mode="study">Pelajari</button>
+      </div>
+    </div>
+    
+    <div class="toolbar">
+      <div class="search-box" style="flex: 1; max-width: 100%;">
+        <span class="s-ico">&#x1F50D;</span>
+        <input type="text" id="search" placeholder="Cari kata hubung atau arti&hellip;">
+      </div>
+    </div>
+    
+    <div class="s-grid" id="list"></div>
+  </div>
+</div>
+
+<script src="data/setsuzokushi-data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+  (function () {
+    "use strict";
+    Nav.build("setsuzokushi.html");
+    
+    var listEl = document.getElementById("list");
+    var searchEl = document.getElementById("search");
+    var modeSelector = document.getElementById("modeSelector");
+    
+    var state = { q: "", mode: "list" };
+    var studyIndex = 0;
+    var filteredData = [];
+    
+    function esc(s) { 
+      return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { 
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; 
+      }); 
+    }
+    
+    function render() {
+      var q = state.q.trim().toLowerCase();
+      
+      filteredData = window.SETSUZOKUSHI_DATA.filter(function (s) {
+        // Search Filter
+        if (q) {
+          var hay = [s.setsuzokushi, s.arti, s.nuansa, s.perbedaan].join(" ").toLowerCase();
+          if (hay.indexOf(q) < 0) return false;
+        }
+        return true;
+      });
+      
+      if (state.mode === "list") {
+        listEl.className = "s-grid";
+        if (!filteredData.length) {
+          listEl.innerHTML = '<div class="empty" style="grid-column: 1/-1;"><div class="e-ico">&#x1F50D;</div><h3>Tidak ada hasil</h3><p>Coba ubah kata kunci pencarian.</p></div>';
+          return;
+        }
+        
+        listEl.innerHTML = filteredData.map(function (s, idx) {
+          return '<div class="s-card" data-idx="' + idx + '">' +
+            '<span class="s-word jp">' + esc(s.setsuzokushi) + '</span>' +
+            '<span class="s-meaning-simple">' + esc(s.arti) + '</span>' +
+          '</div>';
+        }).join("");
+        
+        // Add click listeners to cards to open in study mode
+        listEl.querySelectorAll(".s-card").forEach(function (card) {
+          card.addEventListener("click", function () {
+            var idx = parseInt(card.dataset.idx, 10);
+            studyIndex = idx;
+            state.mode = "study";
+            
+            // Update mode selector tabs
+            modeSelector.querySelectorAll("button").forEach(function (btn) {
+              btn.classList.toggle("active", btn.dataset.mode === "study");
+            });
+            
+            render();
+          });
+        });
+        
+      } else {
+        // Study Mode
+        listEl.className = "study-container";
+        if (!filteredData.length) {
+          listEl.innerHTML = '<div class="empty" style="width: 100%;"><div class="e-ico">&#x1F50D;</div><h3>Tidak ada materi</h3><p>Tidak ada kata hubung untuk kriteria pencarian saat ini.</p></div>';
+          return;
+        }
+        
+        // Ensure index is within range
+        if (studyIndex >= filteredData.length) studyIndex = 0;
+        if (studyIndex < 0) studyIndex = filteredData.length - 1;
+        
+        var s = filteredData[studyIndex];
+        
+        listEl.innerHTML = 
+          '<div class="study-card">' +
+            '<div class="s-header" style="border-bottom: none; padding-bottom: 0;">' +
+              '<span class="s-word jp">' + esc(s.setsuzokushi) + '</span>' +
+            '</div>' +
+            '<div class="s-body" style="margin-top: 10px;">' +
+              '<div class="s-info-row"><strong>Arti:</strong> <span class="s-info-val">' + esc(s.arti) + '</span></div>' +
+              '<div class="s-info-row"><strong>Nuansa:</strong> <span class="s-info-val">' + esc(s.nuansa) + '</span></div>' +
+              '<div class="s-info-row"><strong>Perbandingan:</strong> <span class="s-info-val">' + esc(s.perbedaan) + '</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="study-controls">' +
+            '<button class="btn btn-ghost" id="btnPrev">\u2190 Sebelumnya</button>' +
+            '<span class="study-progress">' + (studyIndex + 1) + ' / ' + filteredData.length + '</span>' +
+            '<button class="btn btn-primary" id="btnNext">Lanjut \u2192</button>' +
+          '</div>';
+          
+        // Add navigation listeners
+        document.getElementById("btnPrev").addEventListener("click", function () {
+          studyIndex = (studyIndex - 1 + filteredData.length) % filteredData.length;
+          render();
+        });
+        document.getElementById("btnNext").addEventListener("click", function () {
+          studyIndex = (studyIndex + 1) % filteredData.length;
+          render();
+        });
+      }
+    }
+    
+    // Add Event Listeners for Filters
+    searchEl.addEventListener("input", function () {
+      state.q = searchEl.value;
+      studyIndex = 0;
+      render();
+    });
+    
+    // Mode Switch Tab listeners
+    modeSelector.querySelectorAll("button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        modeSelector.querySelectorAll("button").forEach(function (x) { x.classList.remove("active"); });
+        btn.classList.add("active");
+        state.mode = btn.dataset.mode;
+        studyIndex = 0;
+        render();
+      });
+    });
+    
+    render();
+  })();
+</script>
+</body>
+</html>

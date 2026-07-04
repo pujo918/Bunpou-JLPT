@@ -1,0 +1,98 @@
+﻿No,Setsuzokushi,Level,Arti
+1,だから,N5,Karena itu / jadi (kasual)
+2,ですから,N5,Karena itu / jadi (sopan)
+3,そして,N5,Dan / lalu / kemudian
+4,それから,N5,Setelah itu / kemudian / lalu
+5,でも,N5,Tapi / namun (kasual)
+6,しかし,N5,Tetapi / namun (formal)
+7,では,N5,Kalau begitu / mari
+8,じゃ,N5,Kalau begitu (kasual)
+9,じゃあ,N5,Kalau begitu (percakapan)
+10,それでは,N5,Kalau begitu (sopan)
+11,それじゃ,N5,Kalau begitu (kasual)
+12,それじゃあ,N5,Kalau begitu (percakapan)
+13,それで,N5,Oleh karena itu / lalu / setelah itu
+14,だって,N5,Karena / tapi kan (kasual percakapan)
+15,それに,N4,Selain itu / lagipula
+16,そこで,N4,Oleh karena itu / lalu / maka dari itu
+17,すると,N4,Seketika itu juga / begitu... lalu
+18,けれども,N4,Namun / akan tetapi
+19,けれど,N4,Namun / akan tetapi (lebih pendek)
+20,だけど,N4,Tapi / namun (kasual)
+21,ですが,N4,Tetapi / namun (sopan)
+22,それでも,N4,Meskipun demikian / namun tetap saja
+23,それなのに,N4,Padahal / meskipun begitu (kecewa/heran)
+24,ところで,N4,Ngomong-ngomong (mengubah topik)
+25,それとも,N4,Atau (pilihan dalam kalimat tanya)
+26,また,N4,Dan juga / selain itu / kembali
+27,または,N4,Atau (pilihan dalam kalimat pernyataan)
+28,つまり,N4,Artinya / dengan kata lain
+29,たとえば,N4,Sebagai contoh / misalnya
+30,ついでに,N4,Sekalian / mumpung / sambil lalu
+31,結局,N4,Pada akhirnya / ujung-ujungnya / setelah melalui berbagai proses
+32,実は,N4,Sebenarnya / sejujurnya
+33,まず,N4,Pertama-tama
+34,次に,N4,Selanjutnya
+35,最後に,N4,Terakhir / pada akhirnya
+36,そのあとで,N4,Setelah itu
+37,そのとき,N4,Pada saat itu
+38,そのあと,N4,Setelah itu / sesudahnya
+39,あるいは,N3,Atau / atau mungkin
+40,したがって,N3,Oleh karena itu / maka dari itu (formal)
+41,ただし,N3,Namun / tetapi (memberikan syarat/pengecualian)
+42,ところが,N3,Namun / padahal (hasil di luar dugaan)
+43,しかも,N3,Terlebih lagi / lagipula / sudah begitu
+44,そのうえ,N3,Selain itu / ditambah lagi
+45,そのため,N3,Oleh karena itu / akibat hal tersebut
+46,なぜなら,N3,Karena / alasannya adalah karena
+47,要するに,N3,Intinya / singkat kata
+48,すなわち,N3,Yaitu / dengan kata lain (sangat formal)
+49,なお,N3,Selain itu / sebagai informasi tambahan
+50,もっとも,N3,Namun / walaupun demikian (koreksi kalimat sebelumnya)
+51,ちなみに,N3,Ngomong-ngomong / sebagai info tambahan (by the way)
+52,それにしては,N3,"Untuk ukuran itu..., ternyata..."
+53,それにしても,N3,Bagaimanapun juga / meskipun begitu / tetap saja
+54,それどころか,N3,Jangankan begitu / kenyataannya malah sebaliknya
+55,それに対して,N3,Sebaliknya / terhadap hal tersebut
+56,もしくは,N3,Atau / atau jika tidak (formal)
+57,言い換えれば,N3,Dengan kata lain
+58,その結果,N3,Sebagai akibatnya / hasilnya
+59,そうすると,N3,Jika demikian / kalau begitu
+60,そうすれば,N3,Jika melakukan hal itu / dengan begitu
+61,そうしたら,N3,Lalu jika begitu / setelah itu
+62,それなら,N3,Kalau begitu / jika demikian
+63,そればかりか,N3,Bukan hanya itu saja / melainkan juga
+64,そればかりでなく,N3,"Tidak hanya itu, tetapi juga"
+65,さらに,N3,Lebih lanjut / lagipula / terlebih lagi
+66,その反面,N3,Di sisi lain / sebaliknya
+67,結論として,N3,Sebagai kesimpulan
+68,というのも,N3,Karena / pasalnya adalah
+69,だとしたら,N3,Jika asumsinya begitu
+70,そういうわけで,N3,Oleh karena hal yang demikian
+71,それゆえに,N3,Oleh karena itu / maka dari itu (formal/sastra)
+72,同時に,N3,Pada saat yang sama / sekaligus
+73,そうかと言って,N3,"Meskipun dikatakan begitu, namun..."
+74,かと言って,N3,Namun meskipun demikian...
+75,とは言え / とはいえ,N3,Walaupun dikatakan demikian
+76,とはいうものの,N3,Meskipun sebenarnya demikian
+77,にもかかわらず,N3,Meskipun / padahal / terlepas dari
+78,ただ,N3,Hanya saja / namun
+79,さて,N3,Nah / sekarang (pindah topik)
+80,それはそうと,N3,Sampingkan hal itu / ngomong-ngomong
+81,なぜかと言うと,N3,Alasannya adalah karena
+82,それゆえ,N3,Oleh karena itu
+83,そのくせ,N3,Padahal / padahal dia... (bernuansa menyindir)
+84,なおさら,N3,Terlebih lagi / apalagi
+85,まして,N3,Apalagi / jangankan... (diikuti kalimat negatif)
+86,そのかわり,N3,Sebagai gantinya
+87,それというのも,N3,Hal itu dikarenakan karena...
+88,ゆえに,N3,Oleh karena itu / oleh sebab itu (formal)
+89,だからといって,N3,Meskipun dikatakan begitu / namun bukan berarti
+90,それどころではない,N3,Jangankan begitu / kenyataannya sama sekali tidak demikian
+91,そのかわりに,N3,Sebagai gantinya
+92,それでもなお,N3,Meskipun begitu tetap saja / biarpun demikian masih tetap
+93,それならば,N3,Jika memang begitu halnya
+94,他方で,N3,Di lain pihak / di sisi lain
+95,一方,N3,Di sisi lain / sementara itu / sedangkan
+96,一方で,N3,Di satu sisi... (untuk membandingkan dua kondisi)
+97,その一方,N3,Namun di samping itu / sebaliknya

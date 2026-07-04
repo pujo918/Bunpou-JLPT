@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Practice Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content">
+    <div class="page-head">
+      <div class="eyebrow">Practice First Learning</div>
+      <h1>Practice Center</h1>
+      <p>Mulai dari latihan. Saat menemui kesulitan, buka materi grammar terkait, lalu kembali berlatih. Semua progres tersimpan otomatis.</p>
+    </div>
+
+    <div class="tiles">
+      <button class="tile" data-mode="daily">
+        <span class="t-ico">&#x25C9;</span>
+        <h3>Daily Practice</h3>
+        <p>Set harian campuran dari N4 &amp; N3.</p>
+      </button>
+      <button class="tile amber" data-mode="random">
+        <span class="t-ico">&#x21BB;</span>
+        <h3>Random Quiz</h3>
+        <p>Soal acak dari semua grammar.</p>
+      </button>
+      <button class="tile green" data-mode="weak">
+        <span class="t-ico">&#x25B2;</span>
+        <h3>Weak Grammar</h3>
+        <p>Fokus pada grammar terlemahmu.</p>
+      </button>
+      <button class="tile violet" data-mode="continue">
+        <span class="t-ico">&#x23F5;</span>
+        <h3>Continue Learning</h3>
+        <p>Lanjutkan grammar terakhir.</p>
+      </button>
+      <button class="tile rose" data-mode="custom">
+        <span class="t-ico">&#x2699;</span>
+        <h3>Custom Practice</h3>
+        <p>Atur level, jumlah, dan tipe soal sendiri.</p>
+      </button>
+    </div>
+
+    <div class="section-title">
+      <h2 id="sessionTitle">Daily Practice</h2>
+      <a href="#" id="restart">Acak ulang</a>
+    </div>
+    <div id="practice"><div class="spinner"></div></div>
+  </div>
+</div>
+
+<script src="data/grammar.js"></script>
+<script src="data/grammar-n4.js"></script>
+<script src="data/grammar-n4b.js"></script>
+<script src="data/grammar-n4c.js"></script>
+<script src="data/grammar-n3.js"></script>
+<script src="data/grammar-n3b.js"></script>
+<script src="data/grammar-n3c.js"></script>
+<script src="data/n4-full.js"></script>
+    <script src="data/n4-extra.js"></script>
+    <script src="data/n3-full.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/data.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  Nav.build("index.html");
+  var host = document.getElementById("practice");
+  var titleEl = document.getElementById("sessionTitle");
+  var currentMode = "daily";
+  var lastCustomOpts = null;
+
+  function renderCustomSetup() {
+    host.innerHTML =
+      '<div class="setup-card">' +
+        '<div class="setup-group">' +
+          '<h3>Pilih Level JLPT</h3>' +
+          '<div class="subtitle">Pilih minimal satu level untuk diuji</div>' +
+          '<div class="toggle-grid">' +
+            '<div class="toggle-card selected" id="optLvlN4">' +
+              '<input type="checkbox" checked id="chkLvlN4">' +
+              '<div class="tc-content">' +
+                '<span class="tc-title">JLPT N4</span>' +
+                '<span class="tc-desc">Grammar dasar, pola kalimat sederhana & ungkapan sehari-hari</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="toggle-card selected" id="optLvlN3">' +
+              '<input type="checkbox" checked id="chkLvlN3">' +
+              '<div class="tc-content">' +
+                '<span class="tc-title">JLPT N3</span>' +
+                '<span class="tc-desc">Grammar menengah, pemahaman bernuansa & ekspresi kontekstual</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="setup-group">' +
+          '<h3>Tipe Soal</h3>' +
+          '<div class="subtitle">Pilih minimal satu tipe latihan</div>' +
+          '<div class="toggle-grid">' +
+            '<div class="toggle-card selected" id="optTypeMcq">' +
+              '<input type="checkbox" checked id="chkTypeMcq">' +
+              '<div class="tc-content">' +
+                '<span class="tc-title">Pilihan Ganda</span>' +
+                '<span class="tc-desc">Pilih satu dari 4 opsi jawaban yang paling tepat (ABC-an)</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="toggle-card selected" id="optTypeFill">' +
+              '<input type="checkbox" checked id="chkTypeFill">' +
+              '<div class="tc-content">' +
+                '<span class="tc-title">Isi Bagian Kosong</span>' +
+                '<span class="tc-desc">Ketik manual kata/pola kalimat bahasa Jepang yang tepat</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="toggle-card selected" id="optTypeArrange">' +
+              '<input type="checkbox" checked id="chkTypeArrange">' +
+              '<div class="tc-content">' +
+                '<span class="tc-title">Susun Kata</span>' +
+                '<span class="tc-desc">Susun frasa acak (drag/click) menjadi kalimat yang padu</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="setup-group">' +
+          '<h3>Jumlah Soal</h3>' +
+          '<div class="subtitle">Pilih berapa banyak soal yang ingin dikerjakan</div>' +
+          '<div class="segment-list">' +
+            '<button class="segment-item" data-val="5">5</button>' +
+            '<button class="segment-item" data-val="10">10</button>' +
+            '<button class="segment-item active" data-val="15">15</button>' +
+            '<button class="segment-item" data-val="20">20</button>' +
+            '<button class="segment-item" data-val="30">30</button>' +
+            '<button class="segment-item" data-val="all">Semua Soal</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="setup-actions">' +
+          '<button class="btn btn-primary" id="startCustomQuizBtn">Mulai Latihan (15 Soal)</button>' +
+        '</div>' +
+      '</div>';
+
+    var chkLvlN4 = document.getElementById("chkLvlN4");
+    var chkLvlN3 = document.getElementById("chkLvlN3");
+    var chkTypeMcq = document.getElementById("chkTypeMcq");
+    var chkTypeFill = document.getElementById("chkTypeFill");
+    var chkTypeArrange = document.getElementById("chkTypeArrange");
+    var startBtn = document.getElementById("startCustomQuizBtn");
+
+    var activeLimit = "15";
+
+    if (lastCustomOpts) {
+      chkLvlN4.checked = lastCustomOpts.chkLvlN4;
+      document.getElementById("optLvlN4").classList.toggle("selected", lastCustomOpts.chkLvlN4);
+      chkLvlN3.checked = lastCustomOpts.chkLvlN3;
+      document.getElementById("optLvlN3").classList.toggle("selected", lastCustomOpts.chkLvlN3);
+      chkTypeMcq.checked = lastCustomOpts.chkTypeMcq;
+      document.getElementById("optTypeMcq").classList.toggle("selected", lastCustomOpts.chkTypeMcq);
+      chkTypeFill.checked = lastCustomOpts.chkTypeFill;
+      document.getElementById("optTypeFill").classList.toggle("selected", lastCustomOpts.chkTypeFill);
+      chkTypeArrange.checked = lastCustomOpts.chkTypeArrange;
+      document.getElementById("optTypeArrange").classList.toggle("selected", lastCustomOpts.chkTypeArrange);
+      activeLimit = lastCustomOpts.activeLimitStr || "15";
+    }
+
+    var segments = host.querySelectorAll(".segment-item");
+    segments.forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.val === activeLimit);
+      btn.addEventListener("click", function () {
+        segments.forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        activeLimit = btn.dataset.val;
+        updateState();
+      });
+    });
+
+    function setupToggleCard(cardId, chkEl) {
+      var card = document.getElementById(cardId);
+      card.addEventListener("click", function (e) {
+        if (e.target !== chkEl) {
+          chkEl.checked = !chkEl.checked;
+        }
+        card.classList.toggle("selected", chkEl.checked);
+        updateState();
+      });
+      chkEl.addEventListener("change", function () {
+        card.classList.toggle("selected", chkEl.checked);
+        updateState();
+      });
+    }
+
+    setupToggleCard("optLvlN4", chkLvlN4);
+    setupToggleCard("optLvlN3", chkLvlN3);
+    setupToggleCard("optTypeMcq", chkTypeMcq);
+    setupToggleCard("optTypeFill", chkTypeFill);
+    setupToggleCard("optTypeArrange", chkTypeArrange);
+
+    function getOpts() {
+      var level = "all";
+      if (chkLvlN4.checked && !chkLvlN3.checked) level = "N4";
+      if (!chkLvlN4.checked && chkLvlN3.checked) level = "N3";
+      var types = {
+        mcq: chkTypeMcq.checked,
+        fill: chkTypeFill.checked,
+        arrange: chkTypeArrange.checked
+      };
+      return { level: level, types: types };
+    }
+
+    function updateState() {
+      var levelOk = chkLvlN4.checked || chkLvlN3.checked;
+      var typeOk = chkTypeMcq.checked || chkTypeFill.checked || chkTypeArrange.checked;
+
+      if (!levelOk || !typeOk) {
+        startBtn.disabled = true;
+        startBtn.textContent = "Pilih minimal 1 level & 1 tipe soal";
+        return;
+      }
+
+      var opts = getOpts();
+      var tempPool = Data.buildPool({ level: opts.level, types: opts.types });
+      var totalCount = tempPool.length;
+
+      if (totalCount === 0) {
+        startBtn.disabled = true;
+        startBtn.textContent = "Tidak ada soal yang cocok";
+        return;
+      }
+
+      startBtn.disabled = false;
+      var limitVal = activeLimit === "all" ? totalCount : parseInt(activeLimit, 10);
+      var finalCount = Math.min(limitVal, totalCount);
+      startBtn.textContent = "Mulai Latihan (" + finalCount + " Soal)";
+    }
+
+    startBtn.addEventListener("click", function () {
+      var opts = getOpts();
+      var limitVal = activeLimit === "all" ? null : parseInt(activeLimit, 10);
+      lastCustomOpts = {
+        level: opts.level,
+        types: opts.types,
+        limit: limitVal,
+        activeLimitStr: activeLimit,
+        chkLvlN4: chkLvlN4.checked,
+        chkLvlN3: chkLvlN3.checked,
+        chkTypeMcq: chkTypeMcq.checked,
+        chkTypeFill: chkTypeFill.checked,
+        chkTypeArrange: chkTypeArrange.checked
+      };
+
+      var title = "Latihan Kustom";
+      var pool = Data.buildPool({ level: opts.level, types: opts.types, limit: limitVal });
+      titleEl.textContent = title;
+      Quiz.runSession(host, pool, { title: title, level: opts.level });
+    });
+
+    updateState();
+  }
+
+  function start(mode, forceConfig) {
+    currentMode = mode;
+    var pool, title, opts = {};
+    if (mode === "custom") {
+      if (forceConfig || !lastCustomOpts) {
+        titleEl.textContent = "Custom Practice Setup";
+        renderCustomSetup();
+        return;
+      } else {
+        title = "Latihan Kustom";
+        pool = Data.buildPool({ level: lastCustomOpts.level, types: lastCustomOpts.types, limit: lastCustomOpts.limit });
+        opts = { title: title, level: lastCustomOpts.level };
+      }
+    } else if (mode === "daily") {
+      title = "Daily Practice";
+      pool = Data.buildPool({ level: "all", limit: 12 });
+      opts = { title: title };
+    } else if (mode === "random") {
+      title = "Random Quiz";
+      pool = Data.buildPool({ level: "all", limit: 15 });
+      opts = { title: title };
+    } else if (mode === "weak") {
+      title = "Weak Grammar Practice";
+      var ids = Data.weakGrammarIds(5);
+      if (!ids.length) {
+        host.innerHTML = '<div class="empty"><div class="e-ico">&#x25B2;</div><h3>Belum ada data kelemahan</h3><p>Kerjakan beberapa latihan dulu agar sistem dapat mengidentifikasi grammar terlemahmu.</p><button class="btn btn-primary" onclick="location.reload()">Mulai Daily Practice</button></div>';
+        titleEl.textContent = title; return;
+      }
+      pool = Data.buildPool({ grammarIds: ids, limit: 15 });
+      opts = { title: title };
+    } else if (mode === "continue") {
+      title = "Continue Learning";
+      var last = Store.getLast();
+      if (!last || !Data.byId(last)) {
+        host.innerHTML = '<div class="empty"><div class="e-ico">&#x23F5;</div><h3>Belum ada riwayat</h3><p>Buka salah satu materi grammar untuk mulai, lalu lanjutkan dari sini.</p><a class="btn btn-primary" href="n4.html">Lihat Materi N4</a></div>';
+        titleEl.textContent = title; return;
+      }
+      var g = Data.byId(last);
+      title = "Lanjutkan: " + g.grammar;
+      pool = Data.buildPool({ grammarIds: [last] });
+      opts = { title: title, grammarId: last, level: g.level };
+    }
+    titleEl.textContent = title;
+    Quiz.runSession(host, pool, opts);
+  }
+
+  document.querySelectorAll(".tile").forEach(function (t) {
+    t.addEventListener("click", function () { start(t.dataset.mode, true); window.scrollTo({ top: 220, behavior: "smooth" }); });
+  });
+  document.getElementById("restart").addEventListener("click", function (e) { e.preventDefault(); start(currentMode); });
+
+  start("daily");
+})();
+</script>
+</body>
+</html>

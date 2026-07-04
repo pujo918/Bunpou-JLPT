@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Review Kesalahan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content">
+    <div class="page-head">
+      <div class="eyebrow">Belajar dari Kesalahan</div>
+      <h1>Review Kesalahan</h1>
+      <p>Semua soal yang pernah kamu jawab salah terkumpul di sini. Ulangi sampai paham, lalu tandai sudah dipahami.</p>
+    </div>
+    <div id="reviewRoot"><div class="spinner"></div></div>
+  </div>
+</div>
+<script src="data/grammar.js"></script>
+<script src="data/grammar-n4.js"></script>
+<script src="data/grammar-n4b.js"></script>
+<script src="data/grammar-n4c.js"></script>
+<script src="data/grammar-n3.js"></script>
+<script src="data/grammar-n3b.js"></script>
+<script src="data/grammar-n3c.js"></script>
+<script src="data/n4-full.js"></script>
+    <script src="data/n4-extra.js"></script>
+    <script src="data/n3-full.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/data.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  Nav.build("review.html");
+  var root = document.getElementById("reviewRoot");
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  function render() {
+    var all = Store.getMistakes();
+    var open = all.filter(function (m) { return !m.understood; });
+    if (!open.length) {
+      root.innerHTML = '<div class="empty"><div class="e-ico">&#x2705;</div><h3>Tidak ada kesalahan tersimpan</h3><p>Bagus! Saat kamu menjawab salah di latihan, soalnya akan muncul di sini untuk diulang.</p><a class="btn btn-primary" href="index.html">Mulai Berlatih</a></div>';
+      return;
+    }
+    var ids = {};
+    open.forEach(function (m) { if (m.grammarId) ids[m.grammarId] = 1; });
+    var html = '<div class="card card-pad mb-0" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">' +
+      '<div><strong>' + open.length + ' soal</strong> menunggu untuk diulang dari <strong>' + Object.keys(ids).length + '</strong> grammar.</div>' +
+      '<button class="btn btn-primary" id="retryAll">Ulangi Semua Kesalahan</button></div>';
+    html += '<div id="quizHost" class="mt-24"></div>';
+    html += '<div class="section-title mt-24"><h2>Daftar Kesalahan</h2></div>';
+    html += open.map(function (m) {
+      return '<div class="wr-item" data-id="' + esc(m.id) + '">' +
+        '<div class="wr-q jp">' + esc(m.question) + "</div>" +
+        '<div class="wr-line">Jawaban benar: <b class="good jp">' + esc(m.answerText) + "</b></div>" +
+        '<div class="muted" style="margin:6px 0">' + esc(m.explanation || "") + "</div>" +
+        '<div class="tag-row"><span class="pill ' + (m.level === "N3" ? "pill-n3" : "pill-n4") + '">' + esc(m.level) + "</span>" +
+          (m.grammarId ? '<a class="grammar-link jp" href="' + Data.detailLink(m.grammarId) + '">' + esc(m.grammar) + ' &#x2192;</a>' : "") +
+          '<button class="btn btn-ghost btn-sm understood" data-id="' + esc(m.id) + '">&#x2713; Sudah paham</button></div>' +
+      "</div>";
+    }).join("");
+    root.innerHTML = html;
+
+    document.getElementById("retryAll").addEventListener("click", function () {
+      var pool = Data.buildPool({ grammarIds: Object.keys(ids), limit: 20 });
+      Quiz.runSession(document.getElementById("quizHost"), pool, { title: "Review Kesalahan" });
+      window.scrollTo({ top: 160, behavior: "smooth" });
+    });
+    root.querySelectorAll(".understood").forEach(function (b) {
+      b.addEventListener("click", function () {
+        Store.markUnderstood(b.dataset.id);
+        Nav.toast("Ditandai sudah dipahami");
+        render();
+      });
+    });
+  }
+  render();
+})();
+</script>
+</body>
+</html>

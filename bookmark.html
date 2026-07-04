@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Bookmark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content">
+    <div class="page-head">
+      <div class="eyebrow">Koleksi Tersimpan</div>
+      <h1>Bookmark</h1>
+      <p>Grammar favorit, grammar sulit, dan soal yang kamu tandai untuk dipelajari lagi.</p>
+    </div>
+    <div id="bmRoot"><div class="spinner"></div></div>
+  </div>
+</div>
+<script src="data/grammar.js"></script>
+<script src="data/grammar-n4.js"></script>
+<script src="data/grammar-n4b.js"></script>
+<script src="data/grammar-n4c.js"></script>
+<script src="data/grammar-n3.js"></script>
+<script src="data/grammar-n3b.js"></script>
+<script src="data/grammar-n3c.js"></script>
+<script src="data/n4-full.js"></script>
+    <script src="data/n4-extra.js"></script>
+    <script src="data/n3-full.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  Nav.build("bookmark.html");
+  var root = document.getElementById("bmRoot");
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  function render() {
+    var gids = Store.bmGrammars();
+    var qs = Store.bmQuestions();
+    if (!gids.length && !qs.length) {
+      root.innerHTML = '<div class="empty"><div class="e-ico">&#x2606;</div><h3>Belum ada bookmark</h3><p>Tandai grammar dengan ikon bintang di halaman detail, atau bookmark soal saat berlatih.</p><a class="btn btn-primary" href="n4.html">Jelajahi Grammar</a></div>';
+      return;
+    }
+    var html = "";
+    html += '<div class="section-title"><h2>Grammar Tersimpan (' + gids.length + ')</h2></div>';
+    if (gids.length) {
+      html += '<div class="g-list">' + gids.map(function (id) {
+        var g = Data.byId(id); if (!g) return "";
+        return '<a class="g-card" href="' + Data.detailLink(id) + '"><div class="g-main">' +
+          '<div class="g-title">' + esc(g.grammar) + '</div><div class="g-meaning">' + esc(g.meaning) + "</div></div>" +
+          '<div class="g-meta"><span class="pill ' + (g.level === "N3" ? "pill-n3" : "pill-n4") + '">' + g.level + "</span></div></a>";
+      }).join("") + "</div>";
+    } else {
+      html += '<p class="muted">Belum ada grammar yang dibookmark.</p>';
+    }
+    html += '<div class="section-title mt-24"><h2>Soal Tersimpan (' + qs.length + ')</h2></div>';
+    if (qs.length) {
+      html += qs.map(function (q) {
+        var key = q.question || q.q || q.sentence;
+        return '<div class="wr-item"><div class="wr-q jp">' + esc(key) + "</div>" +
+          (q.grammar ? '<div class="tag-row"><span class="pill ' + (q.level === "N3" ? "pill-n3" : "pill-n4") + '">' + esc(q.level || "") + "</span>" +
+          (q.grammarId ? '<a class="grammar-link jp" href="' + Data.detailLink(q.grammarId) + '">' + esc(q.grammar) + ' &#x2192;</a>' : "") + "</div>" : "") +
+          '<button class="btn btn-ghost btn-sm rm" data-k="' + esc(key) + '">&#x2715; Hapus</button></div>';
+      }).join("");
+    } else {
+      html += '<p class="muted">Belum ada soal yang dibookmark.</p>';
+    }
+    root.innerHTML = html;
+    root.querySelectorAll(".rm").forEach(function (b) {
+      b.addEventListener("click", function () {
+        Store.toggleQuestionBookmark({ question: b.dataset.k });
+        Nav.toast("Bookmark dihapus");
+        render();
+      });
+    });
+  }
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Riwayat Belajar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content">
+    <div class="page-head">
+      <div class="eyebrow">Jejak Belajar</div>
+      <h1>Riwayat Belajar</h1>
+      <p>Linimasa aktivitasmu: grammar yang dibuka dan latihan yang diselesaikan beserta nilainya.</p>
+    </div>
+    <div id="histRoot"><div class="spinner"></div></div>
+  </div>
+</div>
+<script src="data/grammar.js"></script>
+<script src="data/grammar-n4.js"></script>
+<script src="data/grammar-n4b.js"></script>
+<script src="data/grammar-n4c.js"></script>
+<script src="data/grammar-n3.js"></script>
+<script src="data/grammar-n3b.js"></script>
+<script src="data/grammar-n3c.js"></script>
+<script src="data/n4-full.js"></script>
+    <script src="data/n4-extra.js"></script>
+    <script src="data/n3-full.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  Nav.build("history.html");
+  var root = document.getElementById("histRoot");
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  var DAYS = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var MONTHS = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  function dateKey(ts){var d=new Date(ts);return d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();}
+  function dateHead(ts){var d=new Date(ts);return DAYS[d.getDay()]+", "+d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear();}
+  function timeStr(ts){var d=new Date(ts);return ("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);}
+
+  function render() {
+    var items = Store.getHistory();
+    if (!items.length) {
+      root.innerHTML = '<div class="empty"><div class="e-ico">&#x1F551;</div><h3>Belum ada aktivitas</h3><p>Buka materi grammar atau selesaikan latihan, dan jejaknya akan muncul di sini.</p><a class="btn btn-primary" href="index.html">Mulai Belajar</a></div>';
+      return;
+    }
+    var html = '<div class="timeline">';
+    var lastKey = null;
+    items.forEach(function (e) {
+      var k = dateKey(e.ts);
+      if (k !== lastKey) { html += '<div class="tl-date-head">' + dateHead(e.ts) + "</div>"; lastKey = k; }
+      var isQuiz = e.type === "quiz";
+      var title, meta;
+      if (isQuiz) {
+        title = 'Latihan: <span class="jp">' + esc(e.title || "") + "</span>";
+        meta = '<span>Nilai: <b>' + (e.score || 0) + "/" + (e.total || 0) + "</b></span>" +
+               '<span>Akurasi: <b>' + (e.pct || 0) + '%</b></span>' +
+               (e.duration != null ? '<span>Durasi: ' + e.duration + 's</span>' : "");
+      } else {
+        title = 'Membuka materi <span class="jp">' + esc(e.grammar || "") + "</span>";
+        meta = '<span>' + esc(e.level || "") + "</span>";
+      }
+      html += '<div class="tl-item ' + (isQuiz ? "quiz" : "") + '">' +
+        '<div class="tl-card">' +
+          '<div class="tl-time">' + timeStr(e.ts) + "</div>" +
+          '<div class="tl-title">' + title + "</div>" +
+          '<div class="tl-meta">' + meta + "</div>" +
+        "</div></div>";
+    });
+    html += "</div>";
+    root.innerHTML = html;
+  }
+  render();
+})();
+</script>
+</body>
+</html>

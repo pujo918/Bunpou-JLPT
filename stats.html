@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Statistik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content wide">
+    <div class="page-head">
+      <div class="eyebrow">Progres Belajar</div>
+      <h1>Statistik</h1>
+      <p>Pantau akurasi keseluruhan, perbandingan N4 vs N3, serta grammar terkuat dan terlemahmu.</p>
+    </div>
+    <div id="statsRoot"><div class="spinner"></div></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="data/grammar.js"></script>
+<script src="data/grammar-n4.js"></script>
+<script src="data/grammar-n4b.js"></script>
+<script src="data/grammar-n4c.js"></script>
+<script src="data/grammar-n3.js"></script>
+<script src="data/grammar-n3b.js"></script>
+<script src="data/grammar-n3c.js"></script>
+<script src="data/n4-full.js"></script>
+    <script src="data/n4-extra.js"></script>
+    <script src="data/n3-full.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  Nav.build("stats.html");
+  var root = document.getElementById("statsRoot");
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  var s = Store.getStats();
+  if (!s.total) {
+    root.innerHTML = '<div class="empty"><div class="e-ico">&#x1F4CA;</div><h3>Belum ada data statistik</h3><p>Kerjakan beberapa latihan dulu. Setiap jawaban akan terekam dan divisualisasikan di sini.</p><a class="btn btn-primary" href="index.html">Mulai Berlatih</a></div>';
+    return;
+  }
+  var acc = Store.accuracy(s.correct, s.total);
+  var n4 = s.byLevel.N4 || { total: 0, correct: 0 };
+  var n3 = s.byLevel.N3 || { total: 0, correct: 0 };
+
+  // Ranking grammar berdasar akurasi (min 3 soal)
+  var ranked = Object.keys(s.byGrammar).map(function (id) {
+    var r = s.byGrammar[id]; var g = Data.byId(id);
+    return { id: id, name: g ? g.grammar : id, total: r.total, correct: r.correct, acc: Store.accuracy(r.correct, r.total) };
+  }).filter(function (r) { return r.total >= 3; });
+  var byAcc = ranked.slice().sort(function (a, b) { return b.acc - a.acc; });
+  var strongest = byAcc.slice(0, 5);
+  var weakest = byAcc.slice().reverse().slice(0, 5);
+
+  function rankList(arr, good) {
+    if (!arr.length) return '<p class="muted">Selesaikan minimal 3 soal per grammar untuk melihat peringkat.</p>';
+    return '<div class="rank-list">' + arr.map(function (r) {
+      var col = good ? "var(--green)" : (r.acc < 50 ? "var(--red)" : "var(--accent)");
+      return '<div class="rank-item"><span class="r-name jp">' + esc(r.name) + "</span>" +
+        '<span class="r-track"><span class="r-fill" style="width:' + r.acc + "%;background:" + col + '"></span></span>' +
+        '<span class="r-val">' + r.acc + "%</span></div>";
+    }).join("") + "</div>";
+  }
+
+  var learnedMap = Store.get("learned", {});
+  var learnedCount = Object.keys(learnedMap).filter(function (k) { return learnedMap[k] === "learned"; }).length;
+  var totalGrammar = Data.all().length;
+
+  root.innerHTML =
+    '<div class="stat-grid">' +
+      '<div class="stat"><div class="s-k">Total Soal Dikerjakan</div><div class="s-v">' + s.total + '</div><div class="s-sub">' + s.correct + ' benar</div></div>' +
+      '<div class="stat"><div class="s-k">Akurasi Keseluruhan</div><div class="s-v">' + acc + '%</div><div class="s-sub">seluruh latihan</div></div>' +
+      '<div class="stat"><div class="s-k">Akurasi N4</div><div class="s-v">' + Store.accuracy(n4.correct, n4.total) + '%</div><div class="s-sub">' + n4.total + ' soal</div></div>' +
+      '<div class="stat"><div class="s-k">Akurasi N3</div><div class="s-v">' + Store.accuracy(n3.correct, n3.total) + '%</div><div class="s-sub">' + n3.total + ' soal</div></div>' +
+    '</div>' +
+    '<div class="grid grid-2">' +
+      '<div class="chart-card"><h3>Komposisi Jawaban</h3><canvas id="donut" height="220"></canvas></div>' +
+      '<div class="chart-card"><h3>Akurasi per Level</h3><canvas id="bar" height="220"></canvas></div>' +
+    '</div>' +
+    '<div class="grid grid-2 mt-24">' +
+      '<div class="chart-card"><h3>&#x1F525; Grammar Terkuat</h3>' + rankList(strongest, true) + '</div>' +
+      '<div class="chart-card"><h3>&#x26A0;&#xFE0F; Grammar Terlemah</h3>' + rankList(weakest, false) + '</div>' +
+    '</div>' +
+    '<div class="chart-card mt-24"><h3>Progres Penguasaan Grammar</h3>' +
+      '<div class="progress-track" style="max-width:none;height:12px;margin:8px 0 10px"><div class="progress-fill" style="width:' + Store.accuracy(learnedCount, totalGrammar) + '%"></div></div>' +
+      '<p class="muted">' + learnedCount + ' dari ' + totalGrammar + ' grammar ditandai selesai dipelajari.</p>' +
+    '</div>';
+
+  if (typeof Chart === "undefined") {
+    // Degradasi mulus bila CDN tidak tersedia (mis. dibuka offline via file://)
+    document.getElementById("donut").outerHTML = '<p class="muted">Grafik membutuhkan koneksi internet (Chart.js). Data tetap tersedia di kartu lain.</p>';
+    document.getElementById("bar").outerHTML = '<p class="muted">Grafik membutuhkan koneksi internet (Chart.js).</p>';
+    return;
+  }
+  Chart.defaults.font.family = "Inter, sans-serif";
+  new Chart(document.getElementById("donut"), {
+    type: "doughnut",
+    data: { labels: ["Benar", "Salah"], datasets: [{ data: [s.correct, s.total - s.correct], backgroundColor: ["#16a34a", "#fecaca"], borderWidth: 0 }] },
+    options: { plugins: { legend: { position: "bottom" } }, cutout: "68%" }
+  });
+  new Chart(document.getElementById("bar"), {
+    type: "bar",
+    data: { labels: ["N4", "N3"], datasets: [{ label: "Akurasi %", data: [Store.accuracy(n4.correct, n4.total), Store.accuracy(n3.correct, n3.total)], backgroundColor: ["#2563eb", "#a21caf"], borderRadius: 8 }] },
+    options: { scales: { y: { beginAtZero: true, max: 100, ticks: { callback: function (v) { return v + "%"; } } } }, plugins: { legend: { display: false } } }
+  });
+})();
+</script>
+</body>
+</html>

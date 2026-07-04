@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunpou · Materi N3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+</head>
+<body class="app">
+<div class="main">
+  <div class="content">
+    <div class="page-head">
+      <div class="eyebrow">Daftar Grammar</div>
+      <h1>Materi N3</h1>
+      <p>Grammar menengah JLPT N3. Klik untuk membuka penjelasan mendalam, contoh kalimat, dan latihan khusus.</p>
+    </div>
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="s-ico">&#x1F50D;</span>
+        <input type="text" id="search" placeholder="Cari grammar, arti, atau romaji&hellip;">
+      </div>
+      <div class="filter-group" id="diffFilter">
+        <button class="active" data-d="all">Semua</button>
+        <button data-d="1">Mudah</button>
+        <button data-d="2">Sedang</button>
+        <button data-d="3">Sulit</button>
+      </div>
+      <div class="filter-group" id="statusFilter">
+        <button class="active" data-s="all">Status</button>
+        <button data-s="none">Baru</button>
+        <button data-s="learning">Dipelajari</button>
+        <button data-s="learned">Selesai</button>
+      </div>
+    </div>
+    <div class="g-list" id="list"></div>
+  </div>
+</div>
+<script src="data/grammar.js"></script>
+<script src="data/grammar-n4.js"></script>
+<script src="data/grammar-n4b.js"></script>
+<script src="data/grammar-n4c.js"></script>
+<script src="data/grammar-n3.js"></script>
+<script src="data/grammar-n3b.js"></script>
+<script src="data/grammar-n3c.js"></script>
+<script src="data/n4-full.js"></script>
+    <script src="data/n4-extra.js"></script>
+    <script src="data/n3-full.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/data.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/list.js"></script>
+<script>renderLevelList("N3", "n3.html");</script>
+</body>
+</html>
