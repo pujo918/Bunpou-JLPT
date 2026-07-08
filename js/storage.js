@@ -5,7 +5,12 @@
   function get(key, def) {
     try {
       var raw = localStorage.getItem(P + key);
-      return raw == null ? def : JSON.parse(raw);
+      if (raw == null) return def;
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return raw;
+      }
     } catch (e) { return def; }
   }
   function set(key, val) {
