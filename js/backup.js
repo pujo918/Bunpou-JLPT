@@ -78,7 +78,12 @@
             return;
           }
 
-          var localVal = JSON.parse(localValRaw);
+          var localVal;
+          try {
+            localVal = JSON.parse(localValRaw);
+          } catch (e) {
+            localVal = localValRaw;
+          }
 
           // Gabungkan berdasarkan tipe data
           if (k === P + "learned") {
