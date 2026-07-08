@@ -99,6 +99,52 @@
   function setLast(id) { set("last_grammar", id); }
   function getLast() { return get("last_grammar", null); }
 
+  /* ---------- Daily Quest ---------- */
+  function markDailyQuestItemAsCompleted(id) {
+    try {
+      var quest = get("daily_quest", null);
+      if (!quest) return;
+      var today = new Date().toDateString();
+      if (quest.date === today) {
+        var updated = false;
+        quest.items.forEach(function (it) {
+          if (it.type === "grammar" && it.id === id && !it.completed) {
+            it.completed = true;
+            updated = true;
+          }
+        });
+        if (updated) {
+          set("daily_quest", quest);
+        }
+      }
+    } catch (e) {}
+  }
+
+  function incrementDailyQuestProgress(type, amount) {
+    if (amount === undefined) amount = 1;
+    try {
+      var quest = get("daily_quest", null);
+      if (!quest) return;
+      var today = new Date().toDateString();
+      if (quest.date === today) {
+        var updated = false;
+        quest.items.forEach(function (it) {
+          if (it.type === type && !it.completed) {
+            it.progress = (it.progress || 0) + amount;
+            if (it.progress >= it.target) {
+              it.progress = it.target;
+              it.completed = true;
+            }
+            updated = true;
+          }
+        });
+        if (updated) {
+          set("daily_quest", quest);
+        }
+      }
+    } catch (e) {}
+  }
+
   window.Store = {
     get: get, set: set,
     recordAnswer: recordAnswer, getStats: getStats, accuracy: accuracy,
@@ -109,6 +155,8 @@
     addHistory: addHistory, getHistory: getHistory,
     getNote: getNote, setNote: setNote,
     getLearned: getLearned, setLearned: setLearned,
-    setLast: setLast, getLast: getLast
+    setLast: setLast, getLast: getLast,
+    markDailyQuestItemAsCompleted: markDailyQuestItemAsCompleted,
+    incrementDailyQuestProgress: incrementDailyQuestProgress
   };
 })();

@@ -22,10 +22,32 @@
   }
 
   function compareHTML(c) {
+    var grammar = "";
+    var note = "";
+
+    if (typeof c === "string") {
+      var idx = c.indexOf("(");
+      if (idx !== -1) {
+        grammar = c.substring(0, idx).trim();
+        var endIdx = c.lastIndexOf(")");
+        if (endIdx !== -1) {
+          note = c.substring(idx + 1, endIdx).trim();
+        } else {
+          note = c.substring(idx + 1).trim();
+        }
+      } else {
+        grammar = c;
+        note = "";
+      }
+    } else if (c && typeof c === "object") {
+      grammar = c.grammar || "";
+      note = c.note || "";
+    }
+
     return '<div class="compare-card">' +
       '<div class="vs-tag">vs</div>' +
-      "<h4>" + esc(c.grammar) + "</h4>" +
-      "<p>" + esc(c.note) + "</p>" +
+      "<h4>" + esc(grammar) + "</h4>" +
+      "<p>" + esc(note) + "</p>" +
     "</div>";
   }
 
@@ -47,7 +69,9 @@
     "</div>";
 
     html += '<div class="section-title"><h2>Materi Grammar</h2>' +
-      '<button class="bookmark-btn ' + (booked ? "on" : "") + '" id="bm" title="Bookmark grammar">' + (booked ? "&#x2605;" : "&#x2606;") + "</button></div>";
+      '<div style="display: flex; gap: 8px; align-items: center;">' +
+        '<button class="bookmark-btn ' + (booked ? "on" : "") + '" id="bm" title="Bookmark grammar">' + (booked ? "&#x2605;" : "&#x2606;") + "</button>" +
+      '</div></div>';
 
     html += '<div class="section"><h2><span class="num">1</span>Arti</h2><div class="prose"><p>' + esc(g.meaning) + "</p></div></div>";
     html += '<div class="section"><h2><span class="num">2</span>Rumus</h2><div class="formula-box">' + esc(g.formula) + "</div></div>";
@@ -118,10 +142,20 @@
       Quiz.runSession(ph, questions, { title: "Latihan " + g.grammar, grammarId: g.id, level: g.level });
     });
 
+    // Apply Furigana state on load
+    if (window.Nav && window.Nav.applyFuri && window.Nav.getFuriState) {
+      window.Nav.applyFuri(window.Nav.getFuriState());
+    }
+
     // Tandai sebagai sedang dipelajari + simpan terakhir dibuka
     if (Store.getLearned(g.id) === "none") Store.setLearned(g.id, "learning");
     Store.setLast(g.id);
     Store.addHistory({ type: "study", grammarId: g.id, grammar: g.grammar, level: g.level });
+
+    // Selesaikan misi harian jika item ini ada dalam target misi
+    if (window.Store && window.Store.markDailyQuestItemAsCompleted) {
+      window.Store.markDailyQuestItemAsCompleted(g.id);
+    }
   }
 
   window.renderDetail = function () {

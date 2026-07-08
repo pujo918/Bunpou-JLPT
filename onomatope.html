@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bunpou · Setsuzokushi</title>
+<title>Bunpou · Onomatope</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -136,9 +136,9 @@
 <div class="main">
   <div class="content">
     <div class="page-head">
-      <div class="eyebrow">Daftar Kata Hubung</div>
-      <h1>Setsuzokushi</h1>
-      <p>Kumpulan kata hubung (setsuzokushi) penting. Hubungkan kalimat Anda dengan arti, nuansa penggunaan, dan perbedaannya.</p>
+      <div class="eyebrow">Daftar Kata Tiruan Bunyi</div>
+      <h1>Onomatope</h1>
+      <p>Kumpulan kata tiruan bunyi (onomatope) populer Jepang. Pelajari arti, nuansa, dan contoh penggunaannya.</p>
     </div>
     
     <!-- Mode Selector Tabs -->
@@ -152,7 +152,7 @@
     <div class="toolbar">
       <div class="search-box" style="flex: 1; max-width: 100%;">
         <span class="s-ico">&#x1F50D;</span>
-        <input type="text" id="search" placeholder="Cari kata hubung atau arti&hellip;">
+        <input type="text" id="search" placeholder="Cari kata onomatope atau arti&hellip;">
       </div>
     </div>
     
@@ -160,12 +160,12 @@
   </div>
 </div>
 
-<script src="data/setsuzokushi-data.js"></script>
+<script src="data/onomatope-data.js"></script>
 <script src="js/nav.js"></script>
 <script>
   (function () {
     "use strict";
-    Nav.build("setsuzokushi.html");
+    Nav.build("onomatope.html");
     
     var listEl = document.getElementById("list");
     var searchEl = document.getElementById("search");
@@ -184,9 +184,9 @@
     function render() {
       var q = state.q.trim().toLowerCase();
       
-      filteredData = window.SETSUZOKUSHI_DATA.filter(function (s) {
+      filteredData = window.ONOMATOPE_DATA.filter(function (s) {
         if (q) {
-          var hay = [s.setsuzokushi, s.romaji || "", s.arti, s.nuansa, s.perbedaan].join(" ").toLowerCase();
+          var hay = [s.onomatope, s.romaji || "", s.arti, s.nuansa, s.perbedaan].join(" ").toLowerCase();
           var words = q.split(/\s+/);
           return words.every(function (word) {
             return hay.indexOf(word) >= 0;
@@ -204,7 +204,7 @@
         
         listEl.innerHTML = filteredData.map(function (s, idx) {
           return '<div class="s-card" data-idx="' + idx + '">' +
-            '<span class="s-word jp">' + esc(s.setsuzokushi) + '</span>' +
+            '<span class="s-word jp">' + esc(s.onomatope) + '</span>' +
             '<span class="s-meaning-simple">' + esc(s.arti) + '</span>' +
           '</div>';
         }).join("");
@@ -226,7 +226,7 @@
       } else {
         listEl.className = "study-container";
         if (!filteredData.length) {
-          listEl.innerHTML = '<div class="empty" style="width: 100%;"><div class="e-ico">&#x1F50D;</div><h3>Tidak ada materi</h3><p>Tidak ada kata hubung untuk kriteria pencarian saat ini.</p></div>';
+          listEl.innerHTML = '<div class="empty" style="width: 100%;"><div class="e-ico">&#x1F50D;</div><h3>Tidak ada materi</h3><p>Tidak ada kata onomatope untuk kriteria pencarian saat ini.</p></div>';
           return;
         }
         
@@ -234,16 +234,42 @@
         if (studyIndex < 0) studyIndex = filteredData.length - 1;
         
         var s = filteredData[studyIndex];
+
+        var valHtml = esc(s.perbedaan);
+        if (s.perbedaan.indexOf(" / ") >= 0) {
+          var parts = s.perbedaan.split(" / ");
+          valHtml = parts.map(function (p) {
+            var match = p.match(/^([^(]+)\(([^)]+)\)$/);
+            if (match) {
+              return '<div class="ex-item" style="margin-bottom: 12px; line-height: 1.45;">' +
+                '<div class="jp" style="font-size: 16px; font-weight: 600; color: var(--text);">' + esc(match[1].trim()) + '</div>' +
+                '<div style="font-size: 13.5px; color: var(--text-soft); margin-top: 2px;">(' + esc(match[2].trim()) + ')</div>' +
+                '</div>';
+            }
+            return '<div style="margin-bottom: 12px;">' + esc(p) + '</div>';
+          }).join("");
+        } else {
+          var match = s.perbedaan.match(/^([^(]+)\(([^)]+)\)$/);
+          if (match) {
+            valHtml = '<div class="ex-item" style="line-height: 1.45;">' +
+              '<div class="jp" style="font-size: 16px; font-weight: 600; color: var(--text);">' + esc(match[1].trim()) + '</div>' +
+              '<div style="font-size: 13.5px; color: var(--text-soft); margin-top: 2px;">(' + esc(match[2].trim()) + ')</div>' +
+              '</div>';
+          }
+        }
         
         listEl.innerHTML = 
           '<div class="study-card">' +
             '<div class="s-header" style="border-bottom: none; padding-bottom: 0;">' +
-              '<span class="s-word jp">' + esc(s.setsuzokushi) + '</span>' +
+              '<span class="s-word jp">' + esc(s.onomatope) + '</span>' +
             '</div>' +
             '<div class="s-body" style="margin-top: 10px;">' +
               '<div class="s-info-row"><strong>Arti:</strong> <span class="s-info-val">' + esc(s.arti) + '</span></div>' +
               '<div class="s-info-row"><strong>Nuansa:</strong> <span class="s-info-val">' + esc(s.nuansa) + '</span></div>' +
-              '<div class="s-info-row"><strong>Perbandingan:</strong> <span class="s-info-val">' + esc(s.perbedaan) + '</span></div>' +
+              '<div class="s-info-row" style="flex-direction: column; gap: 6px; align-items: flex-start; margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px;">' +
+                '<strong style="width: auto; margin-bottom: 4px; color: var(--text-soft);">Contoh Penggunaan:</strong>' +
+                '<div class="s-info-val" style="width: 100%;">' + valHtml + '</div>' +
+              '</div>' +
             '</div>' +
           '</div>' +
           '<div class="study-controls">' +

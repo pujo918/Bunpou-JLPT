@@ -17,7 +17,14 @@ function renderLevelList(level, page) {
   }
 
   function render() {
-    var rows = Data.search(Data.byLevel(level), state.q, state);
+    var isSearching = state.q.trim() !== "";
+    var searchList = isSearching ? Data.all() : Data.byLevel(level);
+    var searchOpts = {
+      level: isSearching ? "all" : level,
+      difficulty: state.difficulty,
+      status: state.status
+    };
+    var rows = Data.search(searchList, state.q, searchOpts);
     if (!rows.length) {
       listEl.innerHTML = '<div class="empty"><div class="e-ico">&#x1F50D;</div><h3>Tidak ada hasil</h3><p>Coba ubah kata kunci atau filter.</p></div>';
       return;
@@ -25,12 +32,14 @@ function renderLevelList(level, page) {
     listEl.innerHTML = rows.map(function (g) {
       var cnt = Data.countQuestions(g);
       var st = Store.getLearned(g.id);
+      var levelBadge = g.level !== level ? '<span class="pill ' + (g.level === "N3" ? "pill-n3" : "pill-n4") + '">' + g.level + '</span>' : '';
       return '<a class="g-card" href="' + Data.detailLink(g.id) + '">' +
         '<div class="g-main">' +
           '<div class="g-title">' + esc(g.grammar) + "</div>" +
           '<div class="g-meaning">' + esc(g.meaning) + "</div>" +
         "</div>" +
         '<div class="g-meta">' +
+          levelBadge +
           diffDots(g.difficulty) +
           '<span class="chip">' + cnt.total + ' soal</span>' +
           '<span class="done-check ' + (st !== "none" ? st : "") + '" data-id="' + g.id + '" role="button" tabindex="0" title="' + statusLabel(st) + '" aria-label="Tandai sudah dipahami"><span class="ck">\u2713</span></span>' +

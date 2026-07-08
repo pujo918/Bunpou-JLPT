@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bunpou · Flashcards</title>
+<title>Bunpou · Setsuzoku & Onomatope Flashcard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -17,36 +17,27 @@
 <div class="main">
   <div class="content" style="max-width: 600px; padding-top: 30px;">
     
-    <!-- Title & Subtitle matching reference exactly -->
     <div class="page-head" style="margin-bottom: 20px;">
       <h1 style="font-size: 28px; font-weight: 800; margin-bottom: 4px;">Flashcard</h1>
       <p style="color: var(--text-muted); font-size: 13.5px;">Active recall &middot; ketuk kartu untuk membalik</p>
     </div>
     
-    <!-- Unified Deck Selector & Flashcards Layout -->
     <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
       
-      <!-- Selection Controls Group (Stacked together) -->
       <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 20px; width: 100%;">
         <!-- Quantity Selector Pills -->
         <div class="fc-deck-selector" id="countSelector" style="margin: 0;">
-          <button class="fc-deck-tab count-tab" data-val="10">10</button>
-          <button class="fc-deck-tab active count-tab" data-val="20">20</button>
-          <button class="fc-deck-tab count-tab" data-val="30">30</button>
-          <button class="fc-deck-tab count-tab" data-val="50">50</button>
+          <button class="fc-deck-tab" data-val="10">10</button>
+          <button class="fc-deck-tab active" data-val="20">20</button>
+          <button class="fc-deck-tab" data-val="30">30</button>
+          <button class="fc-deck-tab" data-val="50">50</button>
         </div>
         
-        <!-- Level Selector Pills -->
+        <!-- Deck Selector Pills -->
         <div class="fc-deck-selector" id="deckSelector" style="margin: 0;">
           <button class="fc-deck-tab active" data-val="all">Semua</button>
-          <button class="fc-deck-tab" data-val="N4">N4</button>
-          <button class="fc-deck-tab" data-val="N3">N3</button>
-        </div>
-        
-        <!-- Status Selector Pills -->
-        <div class="fc-deck-selector" id="statusSelector" style="margin: 0;">
-          <button class="fc-deck-tab active status-tab" data-val="all">Semua</button>
-          <button class="fc-deck-tab status-tab" data-val="sudah">Sudah Dipelajari</button>
+          <button class="fc-deck-tab" data-val="setsuzokushi">Setsuzokushi</button>
+          <button class="fc-deck-tab" data-val="onomatope">Onomatope</button>
         </div>
       </div>
 
@@ -55,33 +46,20 @@
         <div class="spinner"></div>
       </div>
 
-      <!-- Stats Area at the bottom -->
-      <div id="fcStatsArea" style="width: 100%; margin-top: 40px; border-top: 1px solid var(--border); padding-top: 24px;">
-      </div>
-
     </div>
   </div>
 </div>
 
-<script src="data/grammar.js"></script>
-<script src="data/grammar-n4.js"></script>
-<script src="data/grammar-n4b.js"></script>
-<script src="data/grammar-n4c.js"></script>
-<script src="data/grammar-n3.js"></script>
-<script src="data/grammar-n3b.js"></script>
-<script src="data/grammar-n3c.js"></script>
-<script src="data/n4-full.js"></script>
-<script src="data/n4-extra.js"></script>
-<script src="data/n3-full.js"></script>
+<script src="data/setsuzokushi-data.js"></script>
+<script src="data/onomatope-data.js"></script>
 <script src="js/storage.js"></script>
-<script src="js/data.js"></script>
 <script src="js/nav.js"></script>
-<script src="js/flashcards.js"></script>
+<script src="js/setsuzoku-flashcards.js"></script>
 <script>
 (function () {
-  Nav.build("flashcards.html");
-  if (window.FlashcardUI) {
-    window.FlashcardUI.init();
+  Nav.build("setsuzoku-flashcards.html");
+  if (window.SetsuzokuFlashcardUI) {
+    window.SetsuzokuFlashcardUI.init();
   }
 })();
 </script>

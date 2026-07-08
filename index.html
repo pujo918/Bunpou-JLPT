@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3b82f6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>(function(){try{var t=localStorage.getItem('jlpt_theme');if(t&&JSON.parse(t)==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
 </head>
 <body class="app">
@@ -309,11 +313,173 @@
     Quiz.runSession(host, pool, opts);
   }
 
+  // --- Daily Quest Implementation ---
+  function initDailyQuest() {
+    var questContainer = document.getElementById("dailyQuestContainer");
+    if (!questContainer) {
+      var contentEl = document.querySelector(".content");
+      var sectionTitleEl = document.querySelector(".section-title");
+      if (contentEl && sectionTitleEl) {
+        questContainer = document.createElement("div");
+        questContainer.id = "dailyQuestContainer";
+        questContainer.style.marginBottom = "24px";
+        contentEl.insertBefore(questContainer, sectionTitleEl);
+      } else {
+        return;
+      }
+    }
+
+    var today = new Date().toDateString();
+    var quest = Store.get("daily_quest", null);
+
+    if (!quest || quest.date !== today) {
+      var allGrammars = window.JLPT_DATA || [];
+      var unlearned = allGrammars.filter(function (g) {
+        var st = Store.getLearned(g.id);
+        return st !== "learned" && st !== "learning";
+      });
+
+      if (unlearned.length < 3) {
+        unlearned = allGrammars.filter(function (g) {
+          return Store.getLearned(g.id) !== "learned";
+        });
+      }
+
+      var pool = unlearned.length >= 3 ? unlearned : allGrammars;
+      
+      var shuffled = pool.slice();
+      for (var i = shuffled.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = temp;
+      }
+
+      var pickCount = Math.min(3, shuffled.length);
+      var items = shuffled.slice(0, pickCount).map(function (g) {
+        return {
+          type: "grammar",
+          id: g.id,
+          title: "Belajar Grammar: " + g.grammar,
+          grammar: g.grammar,
+          level: g.level,
+          meaning: g.meaning,
+          completed: false
+        };
+      });
+
+      // Calculate studied grammar count
+      var learnedMap = Store.get("learned", {});
+      var learnedCount = 0;
+      for (var key in learnedMap) {
+        if (learnedMap[key] === "learning" || learnedMap[key] === "learned") {
+          learnedCount++;
+        }
+      }
+
+      // Determine dynamic target for Grammar Flashcard (max 30)
+      var grammarTarget = 10;
+      if (learnedCount > 60) grammarTarget = 30;
+      else if (learnedCount > 30) grammarTarget = 20;
+      else if (learnedCount > 10) grammarTarget = 15;
+
+      // Determine dynamic target for Setsuzoku & Onomatope (up to 50)
+      var setsuzokuTarget = 10;
+      if (learnedCount > 50) setsuzokuTarget = 50;
+      else if (learnedCount > 25) setsuzokuTarget = 30;
+      else if (learnedCount > 10) setsuzokuTarget = 20;
+
+      // Add Quest 4: Grammar Flashcards
+      items.push({
+        type: "grammar_fc",
+        title: "Ulas Flashcards Grammar N4/N3",
+        progress: 0,
+        target: grammarTarget,
+        completed: false
+      });
+
+      // Add Quest 5: Setsuzoku & Onomatope Flashcards
+      items.push({
+        type: "setsuzoku_fc",
+        title: "Ulas Flashcards Setsuzoku & Onomatope",
+        progress: 0,
+        target: setsuzokuTarget,
+        completed: false
+      });
+
+      quest = {
+        date: today,
+        items: items
+      };
+      Store.set("daily_quest", quest);
+    }
+
+    var allCompleted = true;
+    var listHtml = quest.items.map(function (it) {
+      var isCompleted = it.completed;
+      if (it.type === "grammar") {
+        var learnedStatus = Store.getLearned(it.id);
+        if (learnedStatus === "learning" || learnedStatus === "learned") {
+          isCompleted = true;
+          if (!it.completed) {
+            it.completed = true;
+          }
+        }
+      }
+
+      if (!isCompleted) {
+        allCompleted = false;
+      }
+
+      var statusIcon = isCompleted ? "✅" : "⬜";
+      var strikeStyle = isCompleted ? 'style="text-decoration: line-through; opacity: 0.6;"' : '';
+      
+      if (it.type === "grammar") {
+        var levelClass = it.level === "N3" ? "pill-n3" : "pill-n4";
+        return '<div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; margin-bottom: 6px;">' +
+          '<div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1;">' +
+            '<span style="font-size: 15px;">' + statusIcon + '</span>' +
+            '<a class="jp" href="grammar-detail.html?id=' + encodeURIComponent(it.id) + '" ' + strikeStyle + ' style="font-weight: 600; color: var(--primary); font-size: 15px;">' + it.title + '</a>' +
+            '<span style="color: var(--text-soft); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; padding-right: 10px;"> - ' + it.meaning + '</span>' +
+          '</div>' +
+          '<span class="pill ' + levelClass + '" style="flex-shrink: 0;">' + it.level + '</span>' +
+        '</div>';
+      } else {
+        var linkUrl = it.type === "grammar_fc" ? "flashcards.html" : "setsuzoku-flashcards.html";
+        return '<div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; margin-bottom: 6px;">' +
+          '<div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1;">' +
+            '<span style="font-size: 15px;">' + statusIcon + '</span>' +
+            '<a href="' + linkUrl + '" ' + strikeStyle + ' style="font-weight: 600; color: var(--primary); font-size: 15px;">' + it.title + '</a>' +
+            '<span style="color: var(--text-soft); font-size: 12.5px; font-weight: 500;">(' + it.progress + ' / ' + it.target + ' kartu)</span>' +
+          '</div>' +
+        '</div>';
+      }
+    }).join("");
+
+    Store.set("daily_quest", quest);
+
+    var badgeText = allCompleted ? "SELESAI" : "AKTIF";
+    var badgeClass = allCompleted ? "background: var(--green-soft); color: var(--green);" : "background: var(--accent-soft); color: var(--accent);";
+
+    questContainer.innerHTML = 
+      '<div class="card card-pad" style="margin-bottom: 24px; border-left: 4px solid ' + (allCompleted ? 'var(--green)' : 'var(--accent)') + ';">' +
+        '<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">' +
+          '<h3 style="font-size: 16px; font-weight: 700; margin: 0;">Misi Harian (Daily Quest)</h3>' +
+          '<span class="pill" style="margin-left: auto; ' + badgeClass + '">' + badgeText + '</span>' +
+        '</div>' +
+        '<p style="font-size: 13px; color: var(--text-soft); margin-bottom: 14px;">' +
+          (allCompleted ? 'Selamat! Misi harian Anda hari ini telah selesai. Besok akan ada misi baru.' : 'Selesaikan misi hari ini dengan menyelesaikan daftar aktivitas berikut:') +
+        '</p>' +
+        '<div id="questItemsList">' +
+          listHtml +
+        '</div>' +
+      '</div>';
+  }
+
   document.querySelectorAll(".tile").forEach(function (t) {
     t.addEventListener("click", function () { start(t.dataset.mode, true); window.scrollTo({ top: 220, behavior: "smooth" }); });
   });
   document.getElementById("restart").addEventListener("click", function (e) { e.preventDefault(); start(currentMode); });
 
+  initDailyQuest();
   start("daily");
 })();
 </script>

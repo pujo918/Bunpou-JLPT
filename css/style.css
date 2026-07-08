@@ -1008,6 +1008,55 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   color: #cbd5e1;
 }
 
+/* ===== Sub-navigation (Collapsible Sidebar) ===== */
+.nav-parent {
+  cursor: pointer;
+  justify-content: space-between;
+}
+.nav-parent .arrow {
+  margin-left: auto;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+.nav-parent.expanded .arrow {
+  transform: rotate(90deg);
+}
+.nav-sub-list {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 20px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+.nav-sub-list.show {
+  display: flex;
+}
+.nav-sub-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 11px;
+  border-radius: var(--radius-sm);
+  color: var(--text-soft);
+  font-weight: 500;
+  font-size: 13.5px;
+  transition: background .15s, color .15s;
+}
+.nav-sub-item:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.nav-sub-item.active {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+.nav-sub-item .ico {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
 
 
 

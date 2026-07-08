@@ -471,6 +471,9 @@
       // Tunggu animasi selesai, baru render kartu berikutnya
       setTimeout(function () {
         Session.handleAnswer(ease);
+        if (window.Store && window.Store.incrementDailyQuestProgress) {
+          window.Store.incrementDailyQuestProgress("grammar_fc", 1);
+        }
         self.renderCard();
         self.renderBottomStats();
       }, 220);
