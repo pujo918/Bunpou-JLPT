@@ -74,7 +74,7 @@
 
           if (!localValRaw) {
             // Jika lokal tidak punya data ini, langsung pakai data cadangan
-            localStorage.setItem(k, typeof cloudVal === "string" ? cloudVal : JSON.stringify(cloudVal));
+            localStorage.setItem(k, JSON.stringify(cloudVal));
             return;
           }
 
@@ -204,10 +204,10 @@
             var localNote = typeof localVal === "string" ? localVal : JSON.stringify(localVal);
             var cloudNote = typeof cloudVal === "string" ? cloudVal : JSON.stringify(cloudVal);
             if (cloudNote.length > localNote.length) {
-              localStorage.setItem(k, cloudNote);
+              localStorage.setItem(k, JSON.stringify(cloudVal));
             }
           } else {
-            localStorage.setItem(k, typeof cloudVal === "string" ? cloudVal : JSON.stringify(cloudVal));
+            localStorage.setItem(k, JSON.stringify(cloudVal));
           }
         });
 
